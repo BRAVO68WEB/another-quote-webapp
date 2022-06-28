@@ -1,32 +1,79 @@
 import { NextPage } from 'next'
-import HomePage from '../components/home'
-import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
+import * as Styled from '../styles/styled-components'
+import useSWR, { mutate } from 'swr'
+import Skeleton from 'react-loading-skeleton'
 
-interface APIdata {
-  quote: string;
-  author: string;
-  tags: string[];
-  error: string | undefined;
-}
+interface IndexPageProps {}
 
-class Page extends React.Component {
-  static async getInitialProps(ctx: any) {
-    const res = await fetch('https://api.quotable.io/random')
-    const json = await res.json()
-    return { author: json.author, quote: json.content, tags: json.tags }
-  }
-
-  render() {
-    var quoteContent = this.props as APIdata
+const IndexPage: NextPage<IndexPageProps> = () => {
+    const { data } = useSWR('https://type.fit/api/quotes', {
+        revalidateOnFocus: false,
+    })
+    const [quoteId, setQuoteId] = useState(Math.floor(Math.random() * 1000))
     return (
-    <div>
-      <div>Quote: {quoteContent.quote}</div>
-      <div>Author: {quoteContent.author}</div>
-      <div>Tags: {quoteContent.tags}</div>
-    </div>
+        <>
+            <Styled.Container>
+                <Styled.Wrapper>
+                    <Styled.Box id="quote-box">
+                        <Styled.TextWrapper>
+                            <Styled.Quote id="text">
+                                {!data ? (
+                                    <Skeleton count={3} />
+                                ) : (
+                                    data[quoteId].text
+                                )}
+                            </Styled.Quote>
+
+                            <Styled.Author id="author">
+                                {!data ? (
+                                    <Skeleton width={100} count={1} />
+                                ) : (
+                                    `- ${
+                                        data[quoteId].author
+                                            ? data[quoteId].author
+                                            : 'Unknown author'
+                                    }`
+                                )}
+                            </Styled.Author>
+                        </Styled.TextWrapper>
+
+                        {!data ? (
+                            <Skeleton width={200} count={1} />
+                        ) : (
+                            <Styled.ButtonsWrapper>
+                                <Styled.Tweet
+                                    id="tweet-quote"
+                                    href={`https://twitter.com/intent/tweet?related=freecodecamp&text="${
+                                        data[quoteId].text
+                                    }"+-+${
+                                        data[quoteId].author
+                                            ? data[quoteId].author
+                                            : 'Unknown author'
+                                    }`}
+                                >
+                                    Tweet this quote!
+                                </Styled.Tweet>
+                                <Styled.Button
+                                    id="new-quote"
+                                    onClick={() =>
+                                        setQuoteId(
+                                            Math.floor(Math.random() * 1000)
+                                        )
+                                    }
+                                >
+                                    New quote!
+                                </Styled.Button>
+                            </Styled.ButtonsWrapper>
+                        )}
+                    </Styled.Box>
+                    <Styled.Github href="https://github.com/bravo68web/another-quote-webapp">
+                        Source code on Github
+                    </Styled.Github>
+                </Styled.Wrapper>
+            </Styled.Container>
+        </>
     )
-  }
 }
 
-export default Page
+export default IndexPage
