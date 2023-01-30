@@ -54,6 +54,18 @@ const IndexPage: NextPage<IndexPageProps> = () => {
                                 >
                                     Tweet this quote!
                                 </Styled.Tweet>
+                                <Styled.Whatsapp
+                                    id="new-quote"
+                                    href={`whatsapp://send?text='${
+                                        data[quoteId].text
+                                    }"-${
+                                        data[quoteId].author
+                                            ? data[quoteId].author
+                                            : 'Unknown author'
+                                    }`}
+                                    >
+                                    Share to Whatsapp!
+                                </Styled.Whatsapp>
                                 <Styled.Button
                                     id="new-quote"
                                     onClick={() =>
