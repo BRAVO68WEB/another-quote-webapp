@@ -4,7 +4,7 @@ export const Container = styled.main`
     min-height: 100vh;
     width: 100%;
     /* background: #fafafa; */
-    background-image: url("images/background.jpg");
+    background-image: url("/images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -107,6 +107,7 @@ export const Button = styled.button`
     padding: 0.75rem 1.5rem;
     color: ${({ theme }) => theme.lightWhite};
     background: ${({ theme }) => theme.red};
+    margin: 0 -8;
 
     &:hover {
         color: ${({ theme }) => theme.red};
@@ -124,15 +125,38 @@ export const Tweet = styled.a`
     transition: all 0.3s ease-in-out;
     border-radius: 10px;
     font-size: 1rem;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     padding: 0.75rem 1.5rem;
     color: ${({ theme }) => theme.lightWhite};
     background: ${({ theme }) => theme.lightBlue};
+    margin: 0 -8;
 
     &:hover {
         color: ${({ theme }) => theme.lightBlue};
         background: ${({ theme }) => theme.lightWhite};
         border: 2px solid ${({ theme }) => theme.lightBlue};
+    }
+`
+export const Whatsapp = styled.a`
+    border: 2px solid ${({ theme }) => theme.lightWhite};
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0.75rem 1.5rem;
+    color: ${({ theme }) => theme.lightWhite};
+    background: ${({ theme }) => theme.green};
+    margin: 0 -8;
+
+    &:hover {
+        color: ${({ theme }) => theme.green};
+        background: ${({ theme }) => theme.lightWhite};
+        border: 2px solid ${({ theme }) => theme.green};
     }
 `
 export const Github = styled.a`
